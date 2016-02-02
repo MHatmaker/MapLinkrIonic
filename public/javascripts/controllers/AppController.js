@@ -7,7 +7,7 @@
     console.log('AppController setup');
     define([
         'angular',
-        'ngAnimate',
+//        'ngAnimate',
         'controllers/MasherCtrl',
         'controllers/TabsCtrl',
         'controllers/SPACtrl',
@@ -23,7 +23,7 @@
         'controllers/EmailCtrl',
         'controllers/GoogleSearchDirective',
         'lib/GeoCoder',
-        'js/lib/AgoNewWindowConfig'
+        'lib/AgoNewWindowConfig'
     ],
         function (angular, MasherCtrl, TabsCtrl, SPACtrl, PositionViewCtrl, MapCtrl, VerbageCtrl,
             WebSiteDescriptionCtrl,

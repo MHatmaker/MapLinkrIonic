@@ -8,20 +8,20 @@ var selectedMapType = 'arcgis';
     console.debug('bootstrap setup method');
     define([
         'angular',
-        'ngAnimate',
+//        'ngAnimate',
         'controllers/AppController',
         'controllers/MasherCtrl',
         'controllers/TabsCtrl',
         'lib/AgoNewWindowConfig',
         'controllers/EmailCtrl',
-        'controllers/SpaCtrl',
+//        'controllers/SpaCtrl',
         'controllers/MapCtrl',
-        'lib/GeoCoder',
+//        'lib/GeoCoder',
         'lib/MapHosterLeaflet',
         'lib/MapHosterGoogle',
         'lib/MapHosterArcGIS'
     ], function (angular, AppController, MasherCtrl, TabsCtrl, AgoNewWindowConfig,
-            EmailCtrl, SpaCtrl, MapCtrl,  GeoCoder, MapHosterLeaflet, MapHosterGoogle, MapHosterArcGIS) {
+            EmailCtrl, MapCtrl, MapHosterLeaflet, MapHosterGoogle, MapHosterArcGIS) {
         console.debug('bootstrap define fn');
 
         function init(portalForSearch) {
@@ -51,9 +51,9 @@ var selectedMapType = 'arcgis';
 
                 googleQueryDct = {'query' : null, 'rootScope': null},
 
-                App = angular.module("app", ['ionic', 'ngRoute', 'ui.bootstrap', 'ngGrid', 'ui.router, gnAnimate'])
+                App = angular.module("app", ['ionic', 'ngRoute', 'ui.bootstrap', 'ngGrid', 'ui.router'])
 
-                .config(['$routeProvider', '$locationProvider', '$urlRouterProvider', '$stateProvider', '$compileProvider'
+                .config(['$routeProvider', '$locationProvider', '$urlRouterProvider', '$stateProvider', '$compileProvider',
                         function ($routeProvider, $locationProvider, $urlRouterProvider, $stateProvider, $compileProvider) {
                         console.debug('App module route provider');
 

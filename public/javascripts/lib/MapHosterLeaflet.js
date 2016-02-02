@@ -9,7 +9,7 @@
     // }
     // return {};
 // });
-
+/*
 define('GeoCoder', function () {
     "use strict";
     if (GeoCoder) {
@@ -17,11 +17,12 @@ define('GeoCoder', function () {
     }
     return {};
 });
+*/
 
 (function () {
     "use strict";
     console.log("ready to require stuff in MapHosterLeaflet");
-    require(['http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js', "lib/utils", 'angular', 'lib/GeoCoder']);
+    require(['http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js', "lib/utils", 'angular']);
 
     define(['controllers/PositionViewCtrl', 'lib/GeoCoder', 'lib/utils', 'lib/AgoNewWindowConfig'],
 

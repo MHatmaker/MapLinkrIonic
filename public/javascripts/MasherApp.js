@@ -52,7 +52,7 @@
         "esri/arcgis/Portal",
         'js/lib/AgoNewWindowConfig',
         'js/bootstrap',
-        'js/lib/GeoCoder',
+//        'js/lib/GeoCoder',
         'js/lib/MapHosterLeaflet',
         'js/lib/MapHosterGoogle',
         'js/lib/MapHosterArcGIS',
