@@ -6,8 +6,8 @@
 
     console.log('AppController setup');
     define([
-        'angular',
-//        'ngAnimate',
+        //'angular  ',
+        // 'lib/ionic/js/angular/angular-animate',
         'controllers/MasherCtrl',
         'controllers/TabsCtrl',
         'controllers/SPACtrl',
@@ -25,12 +25,13 @@
         'lib/GeoCoder',
         'lib/AgoNewWindowConfig'
     ],
-        function (angular, MasherCtrl, TabsCtrl, SPACtrl, PositionViewCtrl, MapCtrl, VerbageCtrl,
+        function (MasherCtrl, TabsCtrl, SPACtrl, PositionViewCtrl, MapCtrl, VerbageCtrl,
             WebSiteDescriptionCtrl,
-            SearcherCtrlGrp, SearcherCtrlMap, StompSetupCtrl, DestWndSetupCtrl, TransmitNewUrlCtrl, EmailCtrl, GoogleSearchDirective, GeoCoder, AgoNewWindowConfig) {
-            console.log('AppController define');
+            SearcherCtrlGrp, SearcherCtrlMap, StompSetupCtrl, DestWndSetupCtrl, TransmitNewUrlCtrl,
+            EmailCtrl, GoogleSearchDirective, GeoCoder, AgoNewWindowConfig) {
+            console.debug('AppController define');
 
-            function AppController($scope) {
+            function AppController($scope, $injector) {
                 console.log("AppController empty block");
             }
 
@@ -82,7 +83,15 @@
 */
             function init(App, portalForSearch) {
                 console.log('AppController init');
-                var $inj = angular.injector(['app']),
+                console.debug(App);
+                // var cb = App._configBlocks;
+                // var cb0 = cb[0];
+                // console.debug(cb0);
+                // var cb01 = cb0[0];
+                // console.debug(cb01);
+                //
+                // var $inj = cb01; //App._configBlocks[0][0],
+                var $inj = angular.injector(App); //['app']),
                     $http = $inj.get('$http'),
                     referrerId = AgoNewWindowConfig.getReferrerId(),
                     urlUserName;

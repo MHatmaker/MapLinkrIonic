@@ -7,8 +7,9 @@ var selectedMapType = 'arcgis';
 
     console.debug('bootstrap setup method');
     define([
-        'angular',
-//        'ngAnimate',
+        // 'angular',
+        // 'ngAnimate',
+        'lib/ionic/js/ionic.bundle',
         'controllers/AppController',
         'controllers/MasherCtrl',
         'controllers/TabsCtrl',
@@ -20,7 +21,7 @@ var selectedMapType = 'arcgis';
         'lib/MapHosterLeaflet',
         'lib/MapHosterGoogle',
         'lib/MapHosterArcGIS'
-    ], function (angular, AppController, MasherCtrl, TabsCtrl, AgoNewWindowConfig,
+    ], function (ionic, AppController, MasherCtrl, TabsCtrl, AgoNewWindowConfig,
             EmailCtrl, MapCtrl, MapHosterLeaflet, MapHosterGoogle, MapHosterArcGIS) {
         console.debug('bootstrap define fn');
 
@@ -53,8 +54,9 @@ var selectedMapType = 'arcgis';
 
                 App = angular.module("app", ['ionic', 'ngRoute', 'ui.bootstrap', 'ngGrid', 'ui.router'])
 
-                .config(['$routeProvider', '$locationProvider', '$urlRouterProvider', '$stateProvider', '$compileProvider',
-                        function ($routeProvider, $locationProvider, $urlRouterProvider, $stateProvider, $compileProvider) {
+                .config(['$routeProvider', '$locationProvider', '$urlRouterProvider', '$stateProvider', '$compile',
+                // .config(['$routeProvider', '$locationProvider', '$urlRouterProvider', '$stateProvider',
+                        function ($routeProvider, $locationProvider, $urlRouterProvider, $stateProvider) {
                         console.debug('App module route provider');
 
                         $routeProvider.
@@ -286,9 +288,13 @@ var selectedMapType = 'arcgis';
                 };
             });
 
+
             AppController.start(App, portalForSearch);
             // need to bootstrap angular since we wait for dojo/DOM to load
-            angular.bootstrap(document.body, ['app']);
+            console.log("ready for angular.bootstrap");
+            var $inj = angular.bootstrap(document.body, App); //[ionic'app']);
+            console.log("ready fo AppController.start");
+            // AppController.start(App, portalForSearch);
 
             console.log("url is " + location.search);
             isNewAgoWindow = AgoNewWindowConfig.testUrlArgs();

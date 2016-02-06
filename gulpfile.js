@@ -41,6 +41,7 @@ gulp.task('jade-ndx', function (done) {
     console.log("Grab Jade Index file from ");
     console.log(paths.jadeIndex);
     gulp.src(paths.jadeIndex).pipe(jade ({
+        cwd: './',
         locals: YOUR_LOCALS
     }).on('error', handleError)).pipe(gulp.dest('www')).on('end', done);
 });
@@ -51,6 +52,7 @@ gulp.task('jade-tmplt', function (done) {
     console.log("Grab Jade Template files from ");
     console.log(paths.jadeTemplates);
     gulp.src(paths.jadeTemplates).pipe(jade ({
+        cwd: './',
         locals: YOUR_LOCALS
     }).on('error', handleError)).pipe(gulp.dest('www/templates')).on('end', done);
 });
@@ -61,6 +63,7 @@ gulp.task('jade-ptn', function (done) {
     console.log("Grab Jade Partition files from ");
     console.log(paths.jadePartials);
     gulp.src(paths.jadeTemplates).pipe(jade ({
+        cwd: './',
         locals: YOUR_LOCALS
     }).on('error', handleError)).pipe(gulp.dest('www/partials')).on('end', done);
 });
