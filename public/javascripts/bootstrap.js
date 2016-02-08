@@ -288,6 +288,32 @@ var selectedMapType = 'arcgis';
                 };
             });
 
+            function getUserName($http, opts) {
+                $http({method: 'GET', url: '/username'}).
+                    success(function (data, status, headers, config) {
+                        // this callback will be called asynchronously
+                        // when the response is available.
+                        console.log('AppController getUserName: ', data.name);
+                        // AgoNewWindowConfig.setUserId(data.id );
+                        if (opts.uname) {
+                            AgoNewWindowConfig.setUserName(data.name);
+                        }
+                        // alert('got user name ' + data.name);
+                        if (opts.uid) {
+                            AgoNewWindowConfig.setUserId(data.id);
+                        }
+                        if (opts.refId === -99) {
+                            AgoNewWindowConfig.setReferrerId(data.id);
+                        }
+                    }).
+                    error(function (data, status, headers, config) {
+                            // called asynchronously if an error occurs
+                            // or server returns response with an error status.
+                        console.log('Oops and error', data);
+                        alert('Oops' + data.name);
+                    });
+            }
+
 
             AppController.start(App, portalForSearch);
             // need to bootstrap angular since we wait for dojo/DOM to load
@@ -295,6 +321,24 @@ var selectedMapType = 'arcgis';
             var $inj = angular.bootstrap(document.body, App); //[ionic'app']);
             console.log("ready fo AppController.start");
             // AppController.start(App, portalForSearch);
+            // var $inj = angular.injector(App); //['app']),
+            var
+                $http = $inj.get('$http'),
+                referrerId = AgoNewWindowConfig.getReferrerId(),
+                urlUserName;
+
+              console.log("Check if referrerId is -99");
+              if (referrerId === -99) {
+                  getUserName($http, {uname : true, uid : true, refId : referrerId === -99});
+              } else {
+                  urlUserName = AgoNewWindowConfig.getUserNameFromUrl();
+                  // AgoNewWindowConfig.getReferrerIdFromUrl();
+                  if (urlUserName) {
+                      getUserName($http, {uname : false, uid : true, refId : referrerId === -99});
+                  } else {
+                      getUserName($http, {uname : true, uid : true, refId : referrerId === -99});
+                  }
+              }
 
             console.log("url is " + location.search);
             isNewAgoWindow = AgoNewWindowConfig.testUrlArgs();
