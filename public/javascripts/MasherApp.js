@@ -9,12 +9,12 @@
     'use strict';
     var locationPath = "/";
 
-    // define('angular', function () {
-    //     if (angular) {
-    //         return angular;
-    //     }
-    //     return {};
-    // });
+    define('angular', function () {
+        if (angular) {
+            return angular;
+        }
+        return {};
+    });
 
     require({
         async: true,

@@ -9,23 +9,23 @@
     var selfDetails = {},
         aMap = null;
     console.log('StartupGArcGIS setup');
-    require(['lib/MapHosterArcGIS', 'lib/utils']);
+    require(['lib/MapHosterArcGIS', 'lib/utils',
 
-    dojo.require("esri.map");
-    dojo.require("dijit.layout.BorderContainer");
-    dojo.require("dijit.layout.AccordionContainer");
-    dojo.require("dijit.layout.AccordionPane");
-    dojo.require("dijit.layout.ContentPane");
-    dojo.require("esri.tasks.geometry");
-    dojo.require("esri.tasks.locator");
-    dojo.require("esri/geometry/webMercatorUtils");
-    dojo.require("esri.IdentityManager");
-    dojo.require("esri.dijit.Scalebar");
-    dojo.require("esri.arcgis.utils");
-    dojo.require("dgrid.Grid");
-    dojo.require("dgrid/Selection");
-    dojo.require("dijit.Dialog");
-    dojo.require("dojo.parser");
+    "esri/map",
+    "dijit/layout/BorderContainer",
+    "dijit/layout/AccordionContainer",
+    "dijit/layout/AccordionPane",
+    "dijit/layout/ContentPane",
+    "esri/tasks/geometry",
+    "esri/tasks/locator",
+    "esri/geometry/webMercatorUtils",
+    "esri/IdentityManager",
+    "esri/dijit/Scalebar",
+    "esri/arcgis/utils",
+    "dgrid/Grid",
+    "dgrid/Selection",
+    "dijit/Dialog",
+    "dojo/parser"]);
 
     define([
         'lib/MapHosterArcGIS',
@@ -33,7 +33,6 @@
         'lib/AgoNewWindowConfig',
         'lib/utils',
         'controllers/TabsCtrl',
-        'angular',
         'esri/map'
     ], function (MapHosterArcGIS, StompSetupCtrl, AgoNewWindowConfig, utils, TabsCtrl) {
         console.log('StartupArcGIS defined');

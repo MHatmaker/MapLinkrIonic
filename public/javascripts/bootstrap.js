@@ -4,11 +4,25 @@
 /*global alert */
 /*global location */
 
-define(function () {
+define([
+    // 'angular',
+    // 'ngAnimate',
+    'lib/ionic/js/ionic.bundle',
+    'controllers/AppController',
+    'controllers/MasherCtrl',
+    'controllers/TabsCtrl',
+    'lib/AgoNewWindowConfig',
+    'controllers/EmailCtrl',
+//        'controllers/SpaCtrl',
+    'controllers/MapCtrl',
+//        'lib/GeoCoder',
+    'lib/MapHosterLeaflet',
+    'lib/MapHosterGoogle',
+    'lib/MapHosterArcGIS'], function (ionic, AppController, MasherCtrl, TabsCtrl, AgoNewWindowConfig,
+        EmailCtrl, MapCtrl, MapHosterLeaflet, MapHosterGoogle, MapHosterArcGIS) {
     'use strict';
     var selectedMapType = 'arcgis',
-        bootstrapFunction = function (angular, ionic, AppController, MasherCtrl, TabsCtrl, AgoNewWindowConfig,
-            EmailCtrl, MapCtrl, MapHosterLeaflet, MapHosterGoogle, MapHosterArcGIS) {
+        bootstrapFunction = function () {
             "use strict";
             var init = function (portalForSearch) {
                 // var App = angular.module('app', ['ui.bootstrap']);
@@ -354,23 +368,8 @@ define(function () {
         };
 
     console.debug('bootstrap setup method');
-    return [
-        'angular',
-        // 'ngAnimate',
-        'lib/ionic/js/ionic.bundle',
-        'controllers/AppController',
-        'controllers/MasherCtrl',
-        'controllers/TabsCtrl',
-        'lib/AgoNewWindowConfig',
-        'controllers/EmailCtrl',
-    //        'controllers/SpaCtrl',
-        'controllers/MapCtrl',
-    //        'lib/GeoCoder',
-        'lib/MapHosterLeaflet',
-        'lib/MapHosterGoogle',
-        'lib/MapHosterArcGIS',
-        bootstrapFunction
-    ];
+    var App = bootstrapFunction();
+    return App;
 });
 
 //            { start: init},

@@ -11,10 +11,10 @@ angular.isUndefinedOrNull = function (val) {
 
     console.log('SearcherCtrlMap setup');
     define([
-        'angular',
+        // 'angular',
         'lib/StartupArcGIS',
         'lib/utils'
-    ], function (angular, StartupArcGIS, utils) {
+    ], function (StartupArcGIS, utils) {
         console.log('SearcherCtrlMap define');
         var scopeDict = {},
             portalForSearch = null;
