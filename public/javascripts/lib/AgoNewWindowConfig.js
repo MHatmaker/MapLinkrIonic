@@ -1,50 +1,43 @@
 /*global define */
+/*global console */
 
-var details = {
-    locationPath : "/",
-    search: "/",
-    webmapId : "a4bb8a91ecfb4131aa544eddfbc2f1d0 ",
-    masherChannel : "private-channel-mashchannel",
-    masherChannelInitialized : false,
-    nameChannelAccepted : false,
-    protocol : 'http',
-    host : '', //"http://localhost",
-    hostport : '3035',
-    href : '', //"http://localhost",
-    url: '',
-    lat : '',
-    lon : '',
-    zoom : '',
-    destPref : '',
-    maphost : '',
-    query : '',
-    bounds : {'llx' : '', 'lly' : '', 'urx' : '', 'ury' : ''},
-    isInitialUser : true,
-    userId : null,
-    referrerId : null,
-    userName : '',
-    nextWindowName : 0,
-    hideWebSiteOnStartup : false,
-    smallFormDimensions : { 'top' : 1, 'left' : 1, 'width' : 450, 'height' : 570},
-    startupView : {'summary' : true, 'website' : true}
-};
+define(['lib/utils'], function (utils) {
+    "use strict";
 
+    console.debug('AgoNewWindowConfig define fn');
 
-(function () {
-    'use strict';
-    console.debug('AgoNewWindowConfig.js setup method');
-    var nextWindowName = 'MishMash ';
-   /*
-    var locationPath = "/";
-    //var pathRX = new RegExp(/\/[^\/]+$/), locationPath = location.pathname.replace(pathRX, '');
-    console.log(location.pathname);
-    console.log(location.search);
-    console.log(locationPath);
-    console.log("webmapId " + webmapId + " channel " + masherChannel);
- */
-    define(['lib/utils'],
-        function (utils, Color, Symbol) {
-            console.debug('AgoNewWindowConfig define fn');
+    var details = {
+        locationPath : "/",
+        search: "/",
+        webmapId : "a4bb8a91ecfb4131aa544eddfbc2f1d0 ",
+        masherChannel : "private-channel-mashchannel",
+        masherChannelInitialized : false,
+        nameChannelAccepted : false,
+        protocol : 'http',
+        host : '', //"http://localhost",
+        hostport : '3035',
+        href : '', //"http://localhost",
+        url: '',
+        lat : '',
+        lon : '',
+        zoom : '',
+        destPref : '',
+        maphost : '',
+        query : '',
+        bounds : {'llx' : '', 'lly' : '', 'urx' : '', 'ury' : ''},
+        isInitialUser : true,
+        userId : null,
+        referrerId : null,
+        userName : '',
+        nextWindowName : 0,
+        hideWebSiteOnStartup : false,
+        smallFormDimensions : { 'top' : 1, 'left' : 1, 'width' : 450, 'height' : 570},
+        startupView : {'summary' : true, 'website' : true}
+    },
+		methods = {},
+        agoNewWindowConfig = function () {
+            console.debug('AgoNewWindowConfig define callback fn');
+            var nextWindowName = 'MishMash';
 
             function search(searchDetails) {
                 console.log("setSearch from " + details.search + " to " + searchDetails);
@@ -60,7 +53,7 @@ var details = {
                 return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
             }
 
-            return {
+            methods = {
                 testUrlArgs: function (args) {
                     var rslt = getParameterByName('id');
                     // alert("getParameterByName('id') = " + rslt);
@@ -333,7 +326,8 @@ var details = {
 
                 }
             };
-        });
-
-}());
-// }).call(this);
+			return methods;
+        };
+		agoNewWindowConfig();
+    return methods;
+});

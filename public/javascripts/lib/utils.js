@@ -1,14 +1,20 @@
-/*global define */
+/*global require*/
+/*global define*/
+/*global L*/
+/*global GeoCoder*/
+/*global console*/
+/*global window*/
 /*global getComputedStyle*/
+/*global document*/
 /*global esri*/
 /*global loading*/
 
 (function () {
     "use strict";
     // alert("utils created");
-    define([],
+    define([], function () {
 
-        function () {
+        var libUtils = function () {
 
             var alreadyCalculated = false,
                 topRowHeight = 0,
@@ -111,7 +117,8 @@
                 elem.setAttribute("style", "height:" + hstr);
             }
 
-            function setElementWidth(itm, wdth, units) {
+            //function setElementWidth(/*itm, wdth, units*/) {
+            function setElementWidth(units) {
                 // var elem, wstr;
                 // var elem = angular.element(document.getElementById(itm))[0];
                 if (units === undefined) {
@@ -189,7 +196,8 @@
                 return hgtComponents.idMasterSite - hgtComponents.idMasterSiteExpander;
             }
 
-            function calculateComponentHeights(sumvis, sitevis) {
+            // function calculateComponentHeights(sumvis, sitevis) {
+            function calculateComponentHeights(sitevis) {
                 var totalHgt = 0;
                 if (alreadyCalculated === false) {
                     topRowHeight = getElemHeight("idSiteTopRow");
@@ -242,7 +250,7 @@
                     value = Math.round(val * power),
                     integral = String((neg ? Math.ceil : Math.floor)(value / power)),
                     fraction = String((neg ? -value : value) % power),
-                    padding = new Array(Math.max(precision - fraction.length, 0) + 1).join('0'),
+                    padding = [Math.max(precision - fraction.length, 0) + 1].join('0'),
                     sign = neg ? "-" : "";
 
                 if (integral[0] === '-') {
@@ -265,7 +273,7 @@
             }
 
             function hideLoading(error) {
-                console.log("hide loading");
+                console.log("hide loading " + error);
                 esri.hide(loading);
             }
 
@@ -296,6 +304,7 @@
                 getRandomInt : getRandomInt,
                 recalculateTopRow : recalculateTopRow
             };
-        });
+        };
+        return [libUtils];
+    });
 }());
-// }).call(this);
