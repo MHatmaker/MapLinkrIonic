@@ -25,13 +25,40 @@ define([
     function (MasherCtrl, TabsCtrl, SPACtrl, PositionViewCtrl, MapCtrl, VerbageCtrl,
         WebSiteDescriptionCtrl,
         SearcherCtrlGrp, SearcherCtrlMap, StompSetupCtrl, DestWndSetupCtrl, TransmitNewUrlCtrl,
-        EmailCtrl, GoogleSearchDirective, GeoCoder, AgoNewWindowConfig, $http) {
+        EmailCtrl, GoogleSearchDirective, GeoCoder, AgoNewWindowConfig) {
         "use strict";
         console.debug('AppController define');
 
-        function AppController($scope, $injector) {
+        function AppController($scope, $http) {
             console.log("AppController empty block");
+            GeoCoder.start(App, $http);
         }
+		function getUserName($http, opts) {
+            $http({method: 'GET', url: '/username'}).
+                success(function (data, status, headers, config) {
+                    // this callback will be called asynchronously
+                    // when the response is available.
+                    console.log('AppController getUserName: ', data.name);
+                    // AgoNewWindowConfig.setUserId(data.id );
+                    if (opts.uname) {
+                        AgoNewWindowConfig.setUserName(data.name);
+                    }
+                    // alert('got user name ' + data.name);
+                    if (opts.uid) {
+                        AgoNewWindowConfig.setUserId(data.id);
+                    }
+                    if (opts.refId === -99) {
+                        AgoNewWindowConfig.setReferrerId(data.id);
+                    }
+                }).
+                error(function (data, status, headers, config) {
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                    console.log('Oops and error', data);
+                    alert('Oops' + data.name);
+                });
+        }
+
 /*
         function getUserId($http) {
             $http({method: 'GET', url: '/userid'}).
@@ -56,6 +83,7 @@ define([
         function init(App, portalForSearch) {
             console.log('AppController init');
             console.debug(App);
+			var appcon = App.controller('AppController', ['$scope', '$http', AppController]);
             // var cb = App._configBlocks;
             // var cb0 = cb[0];
             // console.debug(cb0);
@@ -63,24 +91,27 @@ define([
             // console.debug(cb01);
             //
             // var $inj = cb01; //App._configBlocks[0][0],
-            // var $inj = angular.injector(App); //['app']),
-            //     $http = $inj.get('$http'),
-            //     referrerId = AgoNewWindowConfig.getReferrerId(),
-            //     urlUserName;
+            // var $inj = angular.injector(['app']),
+			var
+				$inj = angular.injector(['ng']),
+                $http = $inj.get('$http'),
+				// $http = appcon.service('$http'),
+                referrerId = AgoNewWindowConfig.getReferrerId(),
+                urlUserName;
 
-            // console.log("Check if referrerId is -99");
-            // if (referrerId === -99) {
-            //     getUserName($http, {uname : true, uid : true, refId : referrerId === -99});
-            // } else {
-            //     urlUserName = AgoNewWindowConfig.getUserNameFromUrl();
-            //     // AgoNewWindowConfig.getReferrerIdFromUrl();
-            //     if (urlUserName) {
-            //         getUserName($http, {uname : false, uid : true, refId : referrerId === -99});
-            //     } else {
-            //         getUserName($http, {uname : true, uid : true, refId : referrerId === -99});
-            //     }
-            //
-            // }
+            console.log("Check if referrerId is -99");
+            if (referrerId === -99) {
+                getUserName($http, {uname : true, uid : true, refId : referrerId === -99});
+            } else {
+                urlUserName = AgoNewWindowConfig.getUserNameFromUrl();
+                // AgoNewWindowConfig.getReferrerIdFromUrl();
+                if (urlUserName) {
+                    getUserName($http, {uname : false, uid : true, refId : referrerId === -99});
+                } else {
+                    getUserName($http, {uname : true, uid : true, refId : referrerId === -99});
+                }
+
+            }
 
 
             WebSiteDescriptionCtrl.start(App);
@@ -105,7 +136,7 @@ define([
             // LinkerDisplayDirective.start(App);
             // MapMaximizerDirective.start(App);
             MapCtrl.start(App);
-            GeoCoder.start(App, $http);
+            // GeoCoder.start(App, $http);
 
 
             return AppController;

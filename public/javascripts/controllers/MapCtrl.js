@@ -7,14 +7,14 @@
 
     console.log('MapCtrl setup');
     define([
-        'angular',
+        // 'angular',
         'esri/map',
         'lib/StartupLeaflet',
         'lib/StartupGoogle',
         'lib/StartupArcGIS',
         'lib/utils',
         'lib/AgoNewWindowConfig'
-    ], function (angular, Map, StartupLeaflet, StartupGoogle, StartupArcGIS, utils, AgoNewWindowConfig) {
+    ], function (Map, StartupLeaflet, StartupGoogle, StartupArcGIS, utils, AgoNewWindowConfig) {
         console.log('MapCtrl define');
 
         var mapTypes = {'leaflet': StartupLeaflet,

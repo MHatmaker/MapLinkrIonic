@@ -1,23 +1,23 @@
 /*global define */
 
-(function () {
-    "use strict";
-    var isFirstViewing = true;
-
-    console.log('MasherCtrl setup');
-    define(['angular', 'lib/AgoNewWindowConfig', 'controllers/WebSiteDescriptionCtrl', 'lib/utils'], function (angular,  AgoNewWindowConfig, WebSiteDescriptionCtrl, utils) {
+define(['lib/AgoNewWindowConfig', 'controllers/WebSiteDescriptionCtrl', 'lib/utils'],
+    function (AgoNewWindowConfig, WebSiteDescriptionCtrl, utils) {
+        "use strict";
         console.log('MasherCtrl define');
+
+        console.log('MasherCtrl setup');
         var selfMethods = {},
+		    stompEventHandlerService,
+            isFirstViewing = true,
             descriptions = {
                 'leaflet': 'A selection of coffee shops that were retrieved from a query to a geographic information lookup service, using open source maps and data, displayed on a Leaflet Map.  Alternatively, this could be the web site for a single organization where one of the web site pages contains a Leaflet map of its multiple locations.',
                 'google' : 'A selection of restaurants that were retrieved from a query to a geographic information lookup service, such as Google, displayed on a Google Map using an Open Street Map base layer.  Alternatively, this could be the web site for a single organization where one of the web site pages contains a Google map of its multiple locations.',
                 'arcgis' : 'A typical Web Map from the ArcGIS Online user contributed database.  The intially displayed map is chosen to provide a working environment for this demo.'
             };
 
-        function MasherCtrl($scope, $location, $window, $route, $templateCache) {  //$route, $routeParams, $window) {
-            console.debug('MasherCtrl - initialize collapsed bool');
-
+        function MasherCtrl($scope, $location, $window, $route, $templateCache, $compile, StompEventHandlerService) {
             var startupView = AgoNewWindowConfig.getStartupView();
+			stompEventHandlerService = StompEventHandlerService;
             $scope.ExpandSum = startupView.summary === true ? "Collapse" : "Expand";
             $scope.MasterSiteVis = startupView.website ? "inline" : 'none';
             $scope.isCollapsed = !startupView.summary;
@@ -44,7 +44,7 @@
             $scope.cancel = function () {
                 $scope.showPopupBlockerDialog = false;
             };
-            $scope.expBtnHeight = 1.4;  //utils.getButtonHeight(1.2); //'ExpandSumImgId');
+            $scope.expBtnHeight = 1.4;
 
             $scope.currentTab = null;
             console.log("init with isCollapsed = " + $scope.isCollapsed);
@@ -174,16 +174,22 @@
         //     selfMethods.windowResized();
         // }
 
-        function init(App) {
+        function init(App, ng) {
             console.log('MasherCtrl init');
-            App.controller('MasherCtrl', ['$scope', '$location', '$window', '$route', '$templateCache', MasherCtrl]);
+            App.controller('MasherCtrl', ['$scope', '$location', '$window', '$route', '$templateCache', 'StompEventHandlerService',  MasherCtrl]);
 
             //calling tellAngular on resize event
             window.onresize = selfMethods.windowResized;  // MasherCtrl.prototype.windowResized;
+			//
+            var $inj = angular.injector(['ng', 'ngMock', 'app']),
+                // evtSvc = App.service('StompEventHandlerService');
+                evtSvc = $inj.get('StompEventHandlerService'),
+				masherCtrl = App.controller('MasherCtrl');
+                // evtSvc = stompEventHandlerService;
 
-            var $inj = angular.injector(['app']),
-                evtSvc = $inj.get('StompEventHandlerService');
-
+			masherCtrl.run();
+			evtSvc = masherCtrl.factory('StompEventHandlerService').value();
+			evtSvc.run();
             evtSvc.addEvent('client-NewMapPosition', this.onNewMapPosition);
 
             App.directive('modalshowpopupblockdlg', function () {
@@ -251,7 +257,12 @@
             return MasherCtrl;
         }
         function startMapSystem() {
-            var startupView = AgoNewWindowConfig.getStartupView();
+            var startupView = AgoNewWindowConfig.getStartupView(),
+                $inj = angular.injector(['ng', 'app']),
+                evtSvc = $inj.get('StompEventHandlerService');
+
+            evtSvc.addEvent('client-NewMapPosition', this.onNewMapPosition);
+
             console.log("startMapSystem");
             isFirstViewing = false;
 
@@ -268,6 +279,5 @@
 
         return { start: init, startMapSystem: startMapSystem, onNewMapPosition : onNewMapPosition };
 
-    });
-}());
-// }()).call(this);
+    }
+    );
